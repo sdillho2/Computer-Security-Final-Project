@@ -1,39 +1,59 @@
-import math
+from gmpy2 import powmod
 
 
-def gcd(a, h):
-    temp = 0
-    while(1):
-        temp = a % h
-        if (temp == 0):
-            return h
-        a = h
-        h = temp
+def encrypt(message, key):
+    if isinstance(message, bytes) or isinstance(message, bytearray):
+        message = list(message)
+    elif isinstance(message, str):
+        message = list(map(ord, message))
+    else:
+        message = list(message)
+        
+    e, _d, n = key
+    cipher = []
+    for iblock in range(0, len(message), 16 - 1):
+        m = int.from_bytes(message[iblock:iblock+16 - 1], "big")
+        c = int(powmod(m, e, n))
+        cipher.extend(c.to_bytes(16, "big"))
+    return cipher
 
-# ADD INPUT TO GET PUBLIC KEY E,N AND PRIVATE KEY D
-e = int(input("Enter your public key for e: "))
-n = int(input("Enter your public key for n: "))
+def decrypt(cipher, key):
+    if isinstance(cipher, bytes) or isinstance(cipher, bytearray):
+        cipher = list(cipher)
+    elif isinstance(cipher, str):
+        cipher = list(map(ord, cipher))
+    else:
+        cipher = list(cipher)
+        
+    _e, d, n = key
+    message = []
+    for iblock in range(0, len(cipher), 16):
+        c = int.from_bytes(cipher[iblock:iblock+16], "big")
+        m = int(powmod(c, d, n))
+        message.extend(m.to_bytes(16 - 1, "big"))
+    return message
 
-# Private key (d stands for decrypt)
-# choosing d such that it satisfies
-# d*e = 1 + k * totient
-# ADD PRIVATE KEY TO USE
-d = int(input("Enter your private key (d): "))
-#d = (1 + (k*phi))/e
+def encrypt_text(text, key, blocksize=16):
+    text = text.strip()
+    text = bytes(text, encoding='utf-8')
+    if blocksize:
+        blocksize = blocksize - 1
+        pad_length = blocksize - (len(text) % blocksize)
+        text += bytes([pad_length]) * pad_length
+    cipher = encrypt(text, key)
+    return bytes(cipher).hex()
 
-# Message to be encrypted
-# ADD IN USER INPUT TO GET THE MESSAGE TO ENCRYPT
-text = input("Enter your text message you want to encrypt: ")
+def decrypt_text(cipher, key, blocksize=16):
+    cipher = bytes.fromhex(cipher)
+    text = decrypt(cipher, key)
+    if blocksize:
+        text = text[:-text[-1]]
+    text = bytes(text).decode("utf-8") 
+    return text
 
-# Convert text to numerical representation using ASCII
-numerical_msg = [ord(char) for char in text]
+def main():
+    # Your main code logic goes here
+    g
 
-print("Message data = ", numerical_msg)
-
-# Encryption c = (msg ^ e) % n
-encrypted_msg = [pow(char, e, n) for char in numerical_msg]
-print("Encrypted data = ", encrypted_msg)
-
-# Decryption m = (c ^ d) % n
-decrypted_msg = [pow(char, d, n) for char in encrypted_msg]
-print("Original Message Sent = ", ''.join([chr(int(char)) for char in decrypted_msg]))
+if __name__ == "__main__":
+    main()

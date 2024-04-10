@@ -1,15 +1,5 @@
-def mod_pow(base, exponent, modulus):
-    result = 1
-    base = base % modulus  # Reduce the base modulo modulus
-    while exponent > 0:
-        # exponent is odd, multiply result with base modulo modulus
-        if exponent % 2 == 1:
-            result = (result * base) % modulus
-        # Exponentiate base by squaring and reduce modulo modulus
-        base = (base * base) % modulus
-        # Divide exponent by 2
-        exponent //= 2
-    return result
+import gmpy2
+from gmpy2 import powmod
 
 def gcd(a, h):
 	temp = 0
@@ -33,9 +23,9 @@ binary_msg = input("Enter your binary message you want to encrypt: ")
 msg = int(binary_msg, 2)  # Convert binary to integer
 print("Message data = ", msg)
 
-c = mod_pow(msg, e, n)  # Use built-in pow() with modulo
+c = powmod(msg, e, n)  # Use built-in pow() with modulo
 print("Encrypted data = ", c)
 
 
-m = mod_pow(c, d, n)  # Use built-in pow() with modulo
+m = powmod(c, d, n)  # Use built-in pow() with modulo
 print("Original Message Sent (decrypted)= ", m)
