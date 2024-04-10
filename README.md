@@ -2,4 +2,4 @@
 T1: Cryptography
 Sarah Cullinan, Sofia Dillhoff, Katie Grace, Felix Kery
 
-RSA Algorithm, Caesar Cipher, Rail Fence Cipher
+RSA Algorithm, Caesar Cipher, Rail Fence Cipher, Vigenere Cipher, AES, Triple DES
