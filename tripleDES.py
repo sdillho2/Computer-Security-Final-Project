@@ -118,6 +118,107 @@ def main():
             break
         else:
             print("Invalid option. Please choose again.")
+# Encrypt a binary file
+def encrypt_binary_file(filename, key):
+    with open(filename, 'rb') as file:
+        binary_data = file.read()
+    ciphertext = triple_des_encrypt(binary_data, key)
+    with open('encrypted_' + filename, 'wb') as file:
+        file.write(ciphertext)
+    print("Binary file encrypted and saved as 'encrypted_" + filename + "'.")
+
+# Decrypt a binary file
+def decrypt_binary_file(filename, key):
+    with open(filename, 'rb') as file:
+        ciphertext = file.read()
+    plaintext = triple_des_decrypt(ciphertext, key)
+    with open('decrypted_' + filename, 'wb') as file:
+        file.write(plaintext)
+    print("Binary file decrypted and saved as 'decrypted_" + filename + "'.")
+
+# Main function
+def main():
+    while True:
+        option = input("Choose an option (1: Encrypt, 2: Decrypt, 3: Encrypt Binary File, 4: Decrypt Binary File, 5: Exit): ")
+        
+        if option == '1':
+            key = get_key_from_user()
+            plaintext = get_message_from_user()
+            ciphertext = triple_des_encrypt(plaintext, key)
+            print("Ciphertext:", ciphertext.hex())
+        elif option == '2':
+            key = get_key_from_user()
+            ciphertext = bytes.fromhex(input("Enter the ciphertext (in hexadecimal): "))
+            plaintext = triple_des_decrypt(ciphertext, key)
+            print("Decrypted plaintext:", plaintext.decode())
+        elif option == '3':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the binary file to encrypt: ")
+            encrypt_binary_file(filename, key)
+        elif option == '4':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the encrypted binary file to decrypt: ")
+            decrypt_binary_file(filename, key)
+        elif option == '5':
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid option. Please choose again.")
+
+# Encrypt an image file
+def encrypt_image_file(filename, key):
+    with open(filename, 'rb') as file:
+        image_data = file.read()
+    ciphertext = triple_des_encrypt(image_data, key)
+    with open('encrypted_' + filename, 'wb') as file:
+        file.write(ciphertext)
+    print("Image file encrypted and saved as 'encrypted_" + filename + "'.")
+
+# Decrypt an image file
+def decrypt_image_file(filename, key):
+    with open(filename, 'rb') as file:
+        ciphertext = file.read()
+    plaintext = triple_des_decrypt(ciphertext, key)
+    with open('decrypted_' + filename, 'wb') as file:
+        file.write(plaintext)
+    print("Image file decrypted and saved as 'decrypted_" + filename + "'.")
+
+# Main function
+def main():
+    while True:
+        option = input("Choose an option (1: Encrypt, 2: Decrypt, 3: Encrypt Binary File, 4: Decrypt Binary File, 5: Encrypt Image File, 6: Decrypt Image File, 7: Exit): ")
+        
+        if option == '1':
+            key = get_key_from_user()
+            plaintext = get_message_from_user()
+            ciphertext = triple_des_encrypt(plaintext, key)
+            print("Ciphertext:", ciphertext.hex())
+        elif option == '2':
+            key = get_key_from_user()
+            ciphertext = bytes.fromhex(input("Enter the ciphertext (in hexadecimal): "))
+            plaintext = triple_des_decrypt(ciphertext, key)
+            print("Decrypted plaintext:", plaintext.decode())
+        elif option == '3':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the binary file to encrypt: ")
+            encrypt_binary_file(filename, key)
+        elif option == '4':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the encrypted binary file to decrypt: ")
+            decrypt_binary_file(filename, key)
+        elif option == '5':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the image file to encrypt: ")
+            encrypt_image_file(filename, key)
+        elif option == '6':
+            key = get_key_from_user()
+            filename = input("Enter the filename of the encrypted image file to decrypt: ")
+            decrypt_image_file(filename, key)
+        elif option == '7':
+            print("Exiting program.")
+            break
+        else:
+            print("Invalid option. Please choose again.")
 
 if __name__ == "__main__":
     main()
