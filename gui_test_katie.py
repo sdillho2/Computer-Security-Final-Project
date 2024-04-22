@@ -1,14 +1,12 @@
 from tkinter import *
 from tkinter import ttk
-from PIL import Image, ImageTk
 import rsa_all
 
 
 root = Tk()
 root.configure(background="#636966")
-root.title("cryptociphers")
-title_frame = Frame(root, width=180, height=180, relief=SUNKEN, borderwidth=10)
-title_frame.pack()
+root.title("RSA Encryption and Decryption")
+
 
 
 ################################################################################################################################
@@ -18,20 +16,14 @@ def cipher():
 	window = Tk()
 
 	window.configure(background='#636966')
-	window.title("RSA cipher")
+	window.title("RSA Cipher")
 
 
 	left_frame = Frame(window, width=200, height=600, relief=SUNKEN)
 	left_frame.pack(side=LEFT)
 
-	main_frame = Frame(window, width=800, height=100, relief=SUNKEN, borderwidth=10)
-	main_frame.pack()
-
 	main = Frame(window, width=800, height=400, relief=SUNKEN, bg='#6c6a75')
 	main.pack()
-
-	time_frame = Frame(window, width=500, height=30, relief=SUNKEN, background='gray')
-	time_frame.pack(side=BOTTOM)
 
 	###############################################################################################################################
 
@@ -40,7 +32,7 @@ def cipher():
 			widget.destroy()
 
 	def lab():
-		text_label = Label(main, text="Enter text: ", font=('fixedsys', 16, "bold"), fg="black")
+		text_label = Label(main, text="Enter text: ", font=('arial', 16, "bold"), fg="black")
 		text_label.grid(row=0, column=0, padx=20, pady=20)
 
 		scroll_text = ttk.Scrollbar(main, orient=VERTICAL)
@@ -113,7 +105,7 @@ def cipher():
 				outfilename = rsa_all.encrypt_file(filename, key)
 				new_text.insert(1.0, outfilename)
 			
-		enc = Button(main, text="Encrypt", bd=10, width=10, command=encrypt,bg='#3FBE7F', fg='white')
+		enc = Button(main, text="Encrypt", bd=10, width=10, command=encrypt,bg='#3FBE7F', fg='black')
 		enc.grid(row=0, column=2, padx=20, pady=30)
 		def decrypt():
 			cipher_type = file_type.get()
@@ -132,7 +124,7 @@ def cipher():
 				outfilename = rsa_all.decrypt_file(filename, key)
 				new_text.insert(1.0, outfilename)
 
-		dec = Button(main, text="Decrypt", bd=10, width=10, command=decrypt,bg='tomato2', fg='white')
+		dec = Button(main, text="Decrypt", bd=10, width=10, command=decrypt,bg='tomato2', fg='black')
 		dec.grid(row=0, column=3, padx=10, pady=10)
 
 	#############################################################################################################################
@@ -142,23 +134,19 @@ def cipher():
 	
 
 	btn_rsa = Button(left_frame, padx=20, bd=10, text='RSA Cipher', width=20, height=3, command=RSA_cipher,
-                     bg='white', fg='red', activebackground='black', font=('arial', 16, 'bold'),
+                     bg='white', fg='black', activebackground='black', font=('arial', 20, 'bold'),
 					 activeforeground='#3FBE4F')
 	btn_rsa.grid(row=1, column=0)
 
 	
 	btn_exit = Button(left_frame, text="Exit", padx=20, bd=10, width=23,height=3, command=window.destroy, activebackground="white",
-				  bg='black', fg="white", font=('arial', 12, 'bold'), activeforeground="black")
+				  bg='black', fg="black", font=('arial', 16, 'bold'), activeforeground="black")
 	btn_exit.grid(row=15, column=0)
 
-	window.mainloop()
+	RSA_cipher()
 
 
-label_welcome = Label(root, text="Computer Security Final Project", padx=10, pady=30, bg="light gray", fg="black",
-					  font=("Helvetica", 20, "bold")).pack(pady=30)
-btn_cipher = Button(root, text="Algorithms", padx=20, bd=10, width=20, height=3, command=cipher, bg="light gray",
-					fg="black", activebackground='black', activeforeground='white')
-btn_cipher.pack(pady=30)
+cipher()
 
 
 root.mainloop()
