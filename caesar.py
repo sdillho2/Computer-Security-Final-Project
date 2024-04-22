@@ -43,18 +43,18 @@ def decrypt(C,K):
 
 
 #TO DO: make it for user input
-M = "Hello World"
+#M = "Hello World"
 #CM= input("Enter the message to be encrypted: ").strip()
-K = 3
+#K = 3
 #K = int(input("Enter the key to encrypt: "))
-print("Plain Text is : " + M)
-print("Key is : " + str(K))
-print("Cipher Text is : " + encrypt(M,K))
+#print("Plain Text is : " + M)
+#print("Key is : " + str(K))
+#print("Cipher Text is : " + encrypt(M,K))
 
-C = "Khoor ZRUOG"
+#C = "Khoor ZRUOG"
 #C = input("Enter the message to be decrypted: ").strip()
-K = 3
+#K = 3
 #K = int(input("Enter the key to decrypt: "))
-print("Cipher Text is : " + C)
-print("Key is : " + str(K))
-print("Plain Text is : " + decrypt(C,K))
+#print("Cipher Text is : " + C)
+#print("Key is : " + str(K))
+#print("Plain Text is : " + decrypt(C,K))

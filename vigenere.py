@@ -52,15 +52,15 @@ def decrypt(cipher_text, key):
 
     return plain_text
 
-plain_text = "Hello World"
-key = "KEY"
-cipher_text = encrypt(plain_text, key)
-print("Encrypted text:", cipher_text)
+#plain_text = "Hello World"
+#key = "KEY"
+#cipher_text = encrypt(plain_text, key)
+#print("Encrypted text:", cipher_text)
 
-cipher_text = "RIJVS UYVJN"
-key = "KEY"
-plain_text = decrypt(cipher_text, key)
-print("Decrypted text:", plain_text)
+#cipher_text = "RIJVS UYVJN"
+#key = "KEY"
+#plain_text = decrypt(cipher_text, key)
+#print("Decrypted text:", plain_text)
 
 
 
