@@ -2,21 +2,29 @@ from gmpy2 import powmod
 
 def encrypt(message, key):
     e, _d, n = key
-    cipher = []
+    cipher = b""
     for iblock in range(0, len(message), 8):
         m = int.from_bytes(message[iblock:iblock+8], "big")
-        c = int(powmod(m, e, n))
-        cipher.extend(c.to_bytes(16, "big"))
+        c = powmod(m, e, n)
+        # Convert the mpz object to a Python integer and then to bytes
+        byte_length = (c.bit_length() + 7) // 8
+        cipher += int(c).to_bytes(byte_length, "big")
     return cipher
+
 
 def decrypt(cipher, key):
     _e, d, n = key
-    message = []
+    message = bytearray()  # Use bytearray to efficiently append bytes
     for iblock in range(0, len(cipher), 16):
         c = int.from_bytes(cipher[iblock:iblock+16], "big")
-        m = int(powmod(c, d, n))
-        message.extend(m.to_bytes(8, "big"))
+        m = powmod(c, d, n)
+        # Convert the mpz object to a Python integer and then to bytes
+        byte_length = (m.bit_length() + 7) // 8
+        message.extend(int(m).to_bytes(byte_length, "big"))
     return message
+
+
+
 
 def encrypt_text(text, key):
     text = text.strip()
@@ -25,8 +33,10 @@ def encrypt_text(text, key):
     pad_length = block_size - len(text)
     text += bytes([pad_length]) * pad_length
     cipher = encrypt(text, key)
-    return bytes(cipher).hex()
-
+    # Convert the byte string cipher to hexadecimal
+    encrypted_text = cipher.hex()
+    return encrypted_text
+    
 def decrypt_text(cipher, key):
     cipher = bytes.fromhex(cipher)
     text = decrypt(cipher, key)
