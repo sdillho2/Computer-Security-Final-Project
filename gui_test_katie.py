@@ -15,14 +15,14 @@ def cipher():
 
 	window = Tk()
 
-	window.configure(background='#636966')
+	window.configure(background='black')
 	window.title("RSA Cipher")
 
 
-	left_frame = Frame(window, width=200, height=600, relief=SUNKEN)
+	left_frame = Frame(window, width=200, height=600, relief=SUNKEN, bg='black')
 	left_frame.pack(side=LEFT)
 
-	main = Frame(window, width=800, height=400, relief=SUNKEN, bg='#6c6a75')
+	main = Frame(window, width=800, height=400, relief=SUNKEN, bg='black')
 	main.pack()
 
 	###############################################################################################################################
@@ -133,10 +133,10 @@ def cipher():
 	##############################################################################################################################
 	
 
-	btn_rsa = Button(left_frame, padx=20, bd=10, text='RSA Cipher', width=20, height=3, command=RSA_cipher,
-                     bg='white', fg='black', activebackground='black', font=('arial', 20, 'bold'),
-					 activeforeground='#3FBE4F')
-	btn_rsa.grid(row=1, column=0)
+	# btn_rsa = Button(left_frame, padx=20, bd=10, text='RSA Cipher', width=20, height=3, command=RSA_cipher,
+    #                  bg='white', fg='black', activebackground='black', font=('arial', 20, 'bold'),
+	# 				 activeforeground='#3FBE4F')
+	# btn_rsa.grid(row=1, column=0)
 
 	
 	btn_exit = Button(left_frame, text="Exit", padx=20, bd=10, width=23,height=3, command=window.destroy, activebackground="white",
