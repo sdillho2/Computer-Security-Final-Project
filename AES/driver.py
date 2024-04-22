@@ -7,9 +7,18 @@ from byteTables import genTables
 from mixCols import mixColumns, invMixColumns
 from shiftRows import shiftRows, invShiftRows
 
-def encrypt(text, key_schedule, subBytesTable):
-    def encrypt(plaintext, key_schedule, subBytesTable, num_rounds):
+def sub_bytes(state, subBytesTable):
+    return [[subBytesTable[byte] for byte in word] for word in state]
+
+def inv_sub_bytes(state, invSubBytesTable):
+    return [[invSubBytesTable[byte] for byte in word] for word in state]
+
+def add_round_key(state, round_key):
+    return [[byte ^ round_key[w][b] for b, byte in enumerate(word)] for w, word in enumerate(state)]
+
+def encrypt(plaintext, key_schedule, subBytesTable):
     state = text_to_state(plaintext)
+    num_rounds = len(key_schedule) // 4 - 1
     
     # Initial round key addition
     state = add_round_key(state, key_schedule[:4])
@@ -31,9 +40,53 @@ def encrypt(text, key_schedule, subBytesTable):
 
 
 def decrypt(text, key_schedule, invSubBytesTable):
-    # Add your implementation here
-    # This should use invMixColumns, invShiftRows, and other necessary steps to decrypt the text
-    pass
+    state = text_to_state(text)
+    num_rounds = len(key_schedule) // 4 - 1
+    
+    # Initial round key addition
+    state = add_round_key(state, key_schedule[num_rounds * 4:(num_rounds + 1) * 4])
+    
+    # Rounds
+    for round_num in range(num_rounds-1, 0 ,-1):
+        state = invShiftRows(state)
+        state = inv_sub_bytes(state, invSubBytesTable)
+        state = add_round_key(state, key_schedule[round_num * 4:(round_num + 1) * 4])
+        state = invMixColumns(state)
+    
+    # Final round (no mixColumns)
+    state = invShiftRows(state)
+    state = inv_sub_bytes(state)
+    state = add_round_key(state, key_schedule[:4])
+    
+    # Convert state to text
+    return state_to_text(state)
+
+def text_to_state(text):
+    state = []
+    # Padding: Using PKCS#7 padding standard
+    padding_needed = 16 - (len(text) % 16)
+    text += bytes([padding_needed] * padding_needed)
+    for i in range(0, len(text), 16):
+        block = text[i:i+16]
+        state_block = [[0] * 4 for _ in range(4)]
+        for row in range(4):
+            for col in range(4):
+                state_block[col][row] = block[row * 4 + col]
+        state.append(state_block)
+    return state
+
+def state_to_text(state):
+    text = b""
+    for block in state:
+        for col in range(4):
+            for row in range(4):
+                text += bytes([block[col][row]])  
+    # Remove padding if it's the last block
+    last_byte = text[-1]
+    if last_byte < 16:  # Assuming valid padding is present
+        if all([last_byte == val for val in text[-last_byte:]]):  # Check padding validity
+            return text[:-last_byte]  # Remove padding
+    return text
 
 def main():
     # User interface to select encryption or decryption
