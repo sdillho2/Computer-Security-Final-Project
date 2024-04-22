@@ -1,16 +1,15 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import ttk
 from vigenere import encrypt as vigenere_encrypt, decrypt as vigenere_decrypt
 from railfence import encryptRailFence, decryptRailFence
 from caesar import encrypt as caesar_encrypt, decrypt as caesar_decrypt
-from tripleDES import triple_des_encrypt, triple_des_decrypt
 
 class EncryptionApp:
     def __init__(self, root):
         self.root = root
         self.root.title("Encryption App")
 
-        self.cipher_options = ['Vigenere', 'Rail Fence', 'Caesar', 'Triple DES']
+        self.cipher_options = ['Vigenere', 'Rail Fence', 'Caesar']
 
         self.create_widgets()
 
@@ -63,13 +62,6 @@ class EncryptionApp:
             result = encryptRailFence(text, int(key))
         elif cipher == "Caesar":
             result = caesar_encrypt(text, int(key))
-        # elif cipher == "Triple DES":
-        #     result = triple_des_encrypt(text.encode(), key.encode()).hex()
-        elif cipher == "Triple DES":
-            result = triple_des_encrypt(text.encode(), key.encode()).hex()
-        elif cipher == "Triple DES":
-            result = triple_des_decrypt(bytes.fromhex(text), key.encode()).decode()
-
         else:
             result = "Invalid cipher selected"
 
@@ -87,8 +79,6 @@ class EncryptionApp:
             result = decryptRailFence(text, int(key))
         elif cipher == "Caesar":
             result = caesar_decrypt(text, int(key))
-        elif cipher == "Triple DES":
-            result = triple_des_decrypt(bytes.fromhex(text), key.encode()).decode()
         else:
             result = "Invalid cipher selected"
 
