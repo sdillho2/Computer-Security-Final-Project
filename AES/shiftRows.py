@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 def shiftRows(state):
     """
     Performs the ShiftRows operation on the state.
