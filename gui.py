@@ -63,8 +63,13 @@ class EncryptionApp:
             result = encryptRailFence(text, int(key))
         elif cipher == "Caesar":
             result = caesar_encrypt(text, int(key))
+        # elif cipher == "Triple DES":
+        #     result = triple_des_encrypt(text.encode(), key.encode()).hex()
         elif cipher == "Triple DES":
             result = triple_des_encrypt(text.encode(), key.encode()).hex()
+        elif cipher == "Triple DES":
+            result = triple_des_decrypt(bytes.fromhex(text), key.encode()).decode()
+
         else:
             result = "Invalid cipher selected"
 
