@@ -9,7 +9,7 @@ if __name__=="__main__":
         img=Image.open(imgname).convert('L') 
         imgarray=numpy.array(img)
         fname=input('Enter destination encrypted file name: ')
-        with open(fname,'w+') as fobj:
+        with open(fname,'w') as fobj:
             e=1
             r,c=imgarray.shape
             imgarray=imgarray.tolist()
