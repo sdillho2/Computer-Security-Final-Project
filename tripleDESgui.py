@@ -49,6 +49,34 @@ class TripleDESApp:
         self.result_text = tk.Text(self.root, height=5, width=50)
         self.result_text.grid(row=5, column=1, padx=5, pady=5)
 
+        # Encrypt Button
+        self.encrypt_button = ttk.Button(self.root, text="Encrypt", command=self.encrypt)
+        self.encrypt_button.grid(row=3, column=0, columnspan=2, padx=5, pady=5)
+
+        # Result Display
+        self.result_label = ttk.Label(self.root, text="Result:")
+        self.result_label.grid(row=5, column=0, sticky="w", padx=5, pady=5)
+
+        self.result_text = tk.Text(self.root, height=5, width=50)
+        self.result_text.grid(row=5, column=1, padx=5, pady=5)
+
+    def encrypt(self):
+        key = self.key_entry.get()
+        text = self.text_entry.get()
+        file_path = self.file_entry.get()
+
+        if text:
+            result = triple_des_encrypt(text.encode(), key.encode()).hex()
+        elif file_path:
+            encrypted_filename = encrypt_binary_file(file_path, key)
+            result = "File encrypted as: " + encrypted_filename
+        else:
+            result = "Please enter text or select a file"
+
+        self.result_text.delete(1.0, tk.END)
+        self.result_text.insert(tk.END, result)
+
+
     def browse_file(self):
         file_path = filedialog.askopenfilename()
         self.file_entry.config(state="normal")

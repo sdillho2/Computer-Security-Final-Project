@@ -100,29 +100,31 @@ def get_message_from_user():
     message = input("Enter the message: ").encode()
     return message
 
-# Encrypt a binary file
+
 def encrypt_binary_file(filename, key):
     with open(filename, 'rb') as file:
         binary_data = file.read()
-    # Generate random bytes of the same length as the original file
     random_bytes = os.urandom(len(binary_data))
     ciphertext = triple_des_encrypt(binary_data, key)
     encrypted_data = random_bytes + ciphertext
-    with open('encrypted_' + filename, 'wb') as file:
+    encrypted_filename = 'encrypted_' + filename
+    with open(encrypted_filename, 'wb') as file:
         file.write(encrypted_data)
-    print("Binary file encrypted and saved as 'encrypted_" + filename + "'.")
+    print("Binary file encrypted and saved as '" + encrypted_filename + "'.")
+    return encrypted_filename
 
-# Encrypt an image file
 def encrypt_image_file(filename, key):
     with open(filename, 'rb') as file:
         image_data = file.read()
-    # Generate random bytes of the same length as the original file
     random_bytes = os.urandom(len(image_data))
     ciphertext = triple_des_encrypt(image_data, key)
     encrypted_data = random_bytes + ciphertext
-    with open('encrypted_' + filename, 'wb') as file:
+    encrypted_filename = 'encrypted_' + filename
+    with open(encrypted_filename, 'wb') as file:
         file.write(encrypted_data)
-    print("Image file encrypted and saved as 'encrypted_" + filename + "'.")
+    print("Image file encrypted and saved as '" + encrypted_filename + "'.")
+    return encrypted_filename
+
 
 # Decrypt a binary file
 def decrypt_binary_file(filename, key):
