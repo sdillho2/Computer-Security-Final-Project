@@ -3,6 +3,8 @@
 
 # Define Triple DES encryption and decryption functions
 
+import os
+
 def adjust_key_parity(key):
     """
     Adjust the parity bits of the key to ensure odd parity.
@@ -98,90 +100,55 @@ def get_message_from_user():
     message = input("Enter the message: ").encode()
     return message
 
-# Allow users to choose between encryption and decryption
-def main():
-    while True:
-        option = input("Choose an option (1: Encrypt, 2: Decrypt, 3: Exit): ")
-        
-        if option == '1':
-            key = get_key_from_user()
-            plaintext = get_message_from_user()
-            ciphertext = triple_des_encrypt(plaintext, key)
-            print("Ciphertext:", ciphertext.hex())
-        elif option == '2':
-            key = get_key_from_user()
-            ciphertext = bytes.fromhex(input("Enter the ciphertext (in hexadecimal): "))
-            plaintext = triple_des_decrypt(ciphertext, key)
-            print("Decrypted plaintext:", plaintext.decode())
-        elif option == '3':
-            print("Exiting program.")
-            break
-        else:
-            print("Invalid option. Please choose again.")
 # Encrypt a binary file
 def encrypt_binary_file(filename, key):
     with open(filename, 'rb') as file:
         binary_data = file.read()
+    # Generate random bytes of the same length as the original file
+    random_bytes = os.urandom(len(binary_data))
     ciphertext = triple_des_encrypt(binary_data, key)
+    encrypted_data = random_bytes + ciphertext
     with open('encrypted_' + filename, 'wb') as file:
-        file.write(ciphertext)
+        file.write(encrypted_data)
     print("Binary file encrypted and saved as 'encrypted_" + filename + "'.")
-
-# Decrypt a binary file
-def decrypt_binary_file(filename, key):
-    with open(filename, 'rb') as file:
-        ciphertext = file.read()
-    plaintext = triple_des_decrypt(ciphertext, key)
-    with open('decrypted_' + filename, 'wb') as file:
-        file.write(plaintext)
-    print("Binary file decrypted and saved as 'decrypted_" + filename + "'.")
-
-# Main function
-def main():
-    while True:
-        option = input("Choose an option (1: Encrypt, 2: Decrypt, 3: Encrypt Binary File, 4: Decrypt Binary File, 5: Exit): ")
-        
-        if option == '1':
-            key = get_key_from_user()
-            plaintext = get_message_from_user()
-            ciphertext = triple_des_encrypt(plaintext, key)
-            print("Ciphertext:", ciphertext.hex())
-        elif option == '2':
-            key = get_key_from_user()
-            ciphertext = bytes.fromhex(input("Enter the ciphertext (in hexadecimal): "))
-            plaintext = triple_des_decrypt(ciphertext, key)
-            print("Decrypted plaintext:", plaintext.decode())
-        elif option == '3':
-            key = get_key_from_user()
-            filename = input("Enter the filename of the binary file to encrypt: ")
-            encrypt_binary_file(filename, key)
-        elif option == '4':
-            key = get_key_from_user()
-            filename = input("Enter the filename of the encrypted binary file to decrypt: ")
-            decrypt_binary_file(filename, key)
-        elif option == '5':
-            print("Exiting program.")
-            break
-        else:
-            print("Invalid option. Please choose again.")
 
 # Encrypt an image file
 def encrypt_image_file(filename, key):
     with open(filename, 'rb') as file:
         image_data = file.read()
+    # Generate random bytes of the same length as the original file
+    random_bytes = os.urandom(len(image_data))
     ciphertext = triple_des_encrypt(image_data, key)
+    encrypted_data = random_bytes + ciphertext
     with open('encrypted_' + filename, 'wb') as file:
-        file.write(ciphertext)
+        file.write(encrypted_data)
     print("Image file encrypted and saved as 'encrypted_" + filename + "'.")
+
+# Decrypt a binary file
+def decrypt_binary_file(filename, key):
+    with open(filename, 'rb') as file:
+        encrypted_data = file.read()
+    # Extract the random bytes
+    random_bytes = encrypted_data[:len(encrypted_data) // 2]
+    # Extract the encrypted data, ignoring the random bytes
+    ciphertext = encrypted_data[len(encrypted_data) // 2:]
+    plaintext = triple_des_decrypt(ciphertext, key)
+    with open('decrypted_' + filename[10:], 'wb') as file:  # Remove 'encrypted_' from the filename
+        file.write(plaintext)
+    print("Binary file decrypted and saved as 'decrypted_" + filename[10:] + "'.")
 
 # Decrypt an image file
 def decrypt_image_file(filename, key):
     with open(filename, 'rb') as file:
-        ciphertext = file.read()
+        encrypted_data = file.read()
+    # Extract the random bytes
+    random_bytes = encrypted_data[:len(encrypted_data) // 2]
+    # Extract the encrypted data, ignoring the random bytes
+    ciphertext = encrypted_data[len(encrypted_data) // 2:]
     plaintext = triple_des_decrypt(ciphertext, key)
-    with open('decrypted_' + filename, 'wb') as file:
+    with open('decrypted_' + filename[10:], 'wb') as file:  # Remove 'encrypted_' from the filename
         file.write(plaintext)
-    print("Image file decrypted and saved as 'decrypted_" + filename + "'.")
+    print("Image file decrypted and saved as 'decrypted_" + filename[10:] + "'.")
 
 # Main function
 def main():
