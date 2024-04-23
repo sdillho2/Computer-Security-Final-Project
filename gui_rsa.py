@@ -2,9 +2,9 @@ from tkinter import *
 from tkinter import ttk
 import rsa_all
 
-# e = 17
-# n = 936
-# d = 881
+# e = 65537
+# n = 1595442596643526546463176624547329073
+# d = 2802855420351877757611258613427567727
 
 root = Tk()
 root.configure(background="#636966")
