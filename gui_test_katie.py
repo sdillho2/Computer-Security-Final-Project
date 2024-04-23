@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk
 import rsa_all
+import rsa_image_all as rsa
 
 # e = 17
 # n = 936
@@ -101,7 +102,7 @@ def cipher():
 				new_text.insert(1.0, enc_text)
 			elif cipher_type == "image":
 				filename = txt
-				outfilename = rsa_all.encrypt_image(filename, key)
+				outfilename = rsa.encrypt_image(filename, key)
 				new_text.insert(1.0, outfilename)
 			else:
 				filename = txt
@@ -120,7 +121,7 @@ def cipher():
 				new_text.insert(1.0, dec_text)
 			elif cipher_type == "image":
 				filename = txt
-				outfilename = rsa_all.decrypt_image(filename, key)
+				outfilename = rsa.decrypt_image(filename, key)
 				new_text.insert(1.0, outfilename)
 			else:
 				filename = txt
