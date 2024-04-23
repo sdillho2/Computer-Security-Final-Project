@@ -11,9 +11,8 @@ root = Tk()
 root.configure(background="#636966")
 root.title("RSA Encryption and Decryption")
 
+# formatting
 
-
-################################################################################################################################
 def cipher():
 	root.destroy()
 
@@ -29,44 +28,44 @@ def cipher():
 	main = Frame(window, width=800, height=400, relief=SUNKEN, bg='black')
 	main.pack()
 
-	###############################################################################################################################
-
 	def remove():
 		for widget in main.winfo_children():
 			widget.destroy()
 
 	def lab():
-		text_label = Label(main, text="Enter text: ", font=('arial', 16, "bold"), fg="black")
+		text_label = Label(main, text="Enter text below: ", font=('arial', 16, "bold"), bg="black", fg="white")
 		text_label.grid(row=0, column=0, padx=20, pady=20)
 
 		scroll_text = ttk.Scrollbar(main, orient=VERTICAL)
-		text_box = Text(main, height=8, width=40, pady=10, yscrollcommand=scroll_text.set, bg='white')
+		text_box = Text(main, height=8, width=40, pady=10, yscrollcommand=scroll_text.set, bg='white', fg='black')
 		text_box.grid(row=1, column=0, pady=1, padx=1)
 		scroll_text.config(command=text_box.yview)
 		scroll_text.grid(row=1, column=1, sticky='NS')
 
 
 		scroll_text2 = ttk.Scrollbar(main, orient=VERTICAL)
-		new_text = Text(main, height=8, width=40, pady=10, yscrollcommand=scroll_text2.set, bg='white')
+		new_text = Text(main, height=8, width=40, pady=10, yscrollcommand=scroll_text2.set, bg='white', fg='black')
 		new_text.grid(row=1, column=2, columnspan=2, padx=(10, 0))
 		scroll_text2.config(command=new_text.yview)
 		scroll_text2.grid(row=1, column=4, sticky='NS')
 		return text_box, new_text
 
+# cipher
+
 	def RSA_cipher(): 
 		remove()
 
-		key_label = Label(main, text="Enter e: ", font=('fixedsys', 14), pady=15, fg="black")
+		key_label = Label(main, text="Enter e: ", font=('fixedsys', 14), pady=15, bg='black', fg="white")
 		key_label.grid(row=2, column=0)
-		key_label = Label(main, text="Enter d: ", font=('fixedsys', 14), pady=15, fg="black")
+		key_label = Label(main, text="Enter d: ", font=('fixedsys', 14), pady=15, bg='black', fg="white")
 		key_label.grid(row=2, column=1)
-		key_label = Label(main, text="Enter n: ", font=('fixedsys', 14), pady=15, fg="black")
+		key_label = Label(main, text="Enter n: ", font=('fixedsys', 14), pady=15, bg='black', fg="white")
 		key_label.grid(row=2, column=2)
-		key_e = Entry(main, width=20)
+		key_e = Entry(main, width=20, bg='white', fg='black')
 		key_e.grid(row=3, column=0, padx=10, pady=10)
-		key_d = Entry(main, width=20)
+		key_d = Entry(main, width=20, bg='white', fg='black')
 		key_d.grid(row=3, column=1, padx=10, pady=10)
-		key_n = Entry(main, width=20)
+		key_n = Entry(main, width=20, bg='white', fg='black')
 		key_n.grid(row=3, column=2, padx=10, pady=10)
 
 		text_box, new_text = lab()
@@ -109,8 +108,9 @@ def cipher():
 				outfilename = rsa_all.encrypt_file(filename, key)
 				new_text.insert(1.0, outfilename)
 			
-		enc = Button(main, text="Encrypt", bd=10, width=10, command=encrypt,bg='#3FBE7F', fg='black')
+		enc = Button(main, text="Encrypt", bd=10, width=10, command=encrypt, bg='#3FBE7F', fg='black')
 		enc.grid(row=0, column=2, padx=20, pady=30)
+
 		def decrypt():
 			cipher_type = file_type.get()
 			txt = text_box.get("1.0", END).strip()
@@ -130,17 +130,6 @@ def cipher():
 
 		dec = Button(main, text="Decrypt", bd=10, width=10, command=decrypt,bg='tomato2', fg='black')
 		dec.grid(row=0, column=3, padx=10, pady=10)
-
-	#############################################################################################################################
-
-
-	##############################################################################################################################
-	
-
-	# btn_rsa = Button(left_frame, padx=20, bd=10, text='RSA Cipher', width=20, height=3, command=RSA_cipher,
-    #                  bg='white', fg='black', activebackground='black', font=('arial', 20, 'bold'),
-	# 				 activeforeground='#3FBE4F')
-	# btn_rsa.grid(row=1, column=0)
 
 	
 	btn_exit = Button(left_frame, text="Exit", padx=20, bd=10, width=23,height=3, command=window.destroy, activebackground="white",
