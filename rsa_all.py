@@ -51,29 +51,7 @@ def decrypt_text(cipher, key, blocksize=16):
         text = text[:-text[-1]]
     text = bytes(text).decode("utf-8") 
     return text
-
-# def encrypt_image(filename, key, blocksize=16):
-#     with open(filename, "rb") as img_file:
-#         img = bytes(img_file.read())
-#     if blocksize:
-#         blocksize = blocksize - PADDING_CORRECTION
-#         pad_length = blocksize - (len(img) % blocksize)
-#         img += bytes([pad_length]) * pad_length
-#     cipher = encrypt(img, key)
-#     with open('./encryptedImage.jpeg', 'wb') as out:
-#         out.write(bytes(cipher))
-#     return "./encryptedImage.jpeg"
-	
-# def decrypt_image(filename, key, blocksize=16):
-#     with open(filename, "rb") as cipher_file:
-#         cipher = bytes(cipher_file.read())
-#     img = decrypt(cipher, key)
-#     if blocksize:
-#         img = img[:-img[-1]]
-#     with open('./decryptedImage.jpeg', 'wb') as out:
-#         out.write(bytes(img))
-#     return './decryptedImage.jpeg'
-
+    
 def encrypt_image(filename, key):
     with open(filename, "rb") as img_file:
         img = img_file.read()
