@@ -1,4 +1,4 @@
-from gmpy2 import powmod
+from gmpy2 import powmod, mpz
 
 def encrypt(message, key):
     if isinstance(message, bytes) or isinstance(message, bytearray):
@@ -17,17 +17,10 @@ def encrypt(message, key):
     return cipher
 
 def decrypt(cipher, key):
-    if isinstance(cipher, bytes) or isinstance(cipher, bytearray):
-        cipher = list(cipher)
-    elif isinstance(cipher, str):
-        cipher = list(map(ord, cipher))
-    else:
-        cipher = list(cipher)
-        
     _e, d, n = key
     message = []
     for iblock in range(0, len(cipher), 16):
-        c = int.from_bytes(cipher[iblock:iblock+16], "big")
+        c = mpz(int.from_bytes(cipher[iblock:iblock+16], "big"))
         m = int(powmod(c, d, n))
         message.extend(m.to_bytes(16 - 1, "big"))
     return message

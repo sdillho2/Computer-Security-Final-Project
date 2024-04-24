@@ -3,11 +3,11 @@ from tkinter import ttk
 import rsa_all
 
 # e = 65537
-# n = 1595442596643526546463176624547329073
-# d = 2802855420351877757611258613427567727
+# d = 1595442596643526546463176624547329073
+# n = 2802855420351877757611258613427567727
 
 root = Tk()
-root.configure(background="#636966")
+root.configure(background="black")
 root.title("RSA Encryption and Decryption")
 
 # formatting
