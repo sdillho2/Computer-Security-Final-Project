@@ -14,13 +14,9 @@ root.title("RSA Encryption and Decryption")
 
 def cipher():
 	root.destroy()
-	
-
 	window = Tk()
-
 	window.configure(background='black')
 	window.title("RSA Cipher")
-
 
 	left_frame = Frame(window, width=200, height=600, relief=SUNKEN, bg='black')
 	left_frame.pack(side=LEFT)
@@ -130,7 +126,6 @@ def cipher():
 
 		dec = Button(main, text="Decrypt", bd=10, width=10, command=decrypt, bg='white', fg='black')
 		dec.grid(row=0, column=3, padx=10, pady=10)
-
 	
 	btn_exit = Button(left_frame, text="Quit", padx=20, bd=10, width=10,height=2, command=window.destroy,
 				  bg='white', fg="black", font=('arial', 20, 'bold'))
@@ -138,8 +133,6 @@ def cipher():
 
 	RSA_cipher()
 
-
 cipher()
-
 
 root.mainloop()
