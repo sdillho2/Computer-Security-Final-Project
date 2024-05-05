@@ -1,3 +1,6 @@
+# Katie
+# helper code to create e, d, n
+
 import rsa
 
 # Generate RSA key pair
